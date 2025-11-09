@@ -1,10 +1,10 @@
 package model;
 
-public class Rol {
+public class Rol implements ObtenerID {
   private int rol_ID;
   private String rol_nombre;
 
-  public Rol(int rol_ID, String rol_name) {
+  public Rol(int rol_ID, String rol_nombre) {
     this.rol_ID = rol_ID;
     this.rol_nombre = rol_nombre;
   }
@@ -20,11 +20,21 @@ public class Rol {
     this.rol_ID = rol_ID;
   }
 
-  public String getRol_name() {
+  public String getRol_nombre() {
     return rol_nombre;
   }
 
-  public void setRol_name(String rol_nombre) {
+  public void setRol_nombre(String rol_nombre) {
     this.rol_nombre = rol_nombre;
+  }
+
+  @Override
+  public String toString() {
+    return rol_nombre;
+  }
+
+  @Override
+  public int getId() {
+    return rol_ID;
   }
 }

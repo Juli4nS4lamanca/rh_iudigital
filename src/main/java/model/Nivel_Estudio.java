@@ -1,6 +1,6 @@
 package model;
 
-public class Nivel_Estudio {
+public class Nivel_Estudio implements ObtenerID {
   private int nivel_ID;
   private String nivel_estudio_nombre;
 
@@ -26,5 +26,15 @@ public class Nivel_Estudio {
 
   public void setNivel_estudio_nombre(String nivel_estudio_nombre) {
     this.nivel_estudio_nombre = nivel_estudio_nombre;
+  }
+
+  @Override
+  public String toString() {
+    return nivel_estudio_nombre;
+  }
+
+  @Override
+  public int getId() {
+    return nivel_ID;
   }
 }
