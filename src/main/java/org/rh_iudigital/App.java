@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
-        FXMLLoader loader = loadFXML("primary");
+        FXMLLoader loader = loadFXML("Inicio");
         Parent root = loader.getRoot();
 
         scene = new Scene(root, 800, 600);

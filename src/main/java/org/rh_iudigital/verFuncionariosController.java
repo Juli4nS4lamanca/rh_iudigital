@@ -141,8 +141,8 @@ public class verFuncionariosController {
 
   private void formularioEditarFuncionario(Funcionario funcionario) throws IOException {
     try {
-      FXMLLoader loader = App.setRoot("secondary");
-      SecondaryController controller = loader.getController();
+      FXMLLoader loader = App.setRoot("Form_Funcionario");
+      Form_FuncionarioController controller = loader.getController();
       controller.setFuncionario(funcionario);
       cargarFuncionarios();
     }catch (IOException e){
@@ -174,7 +174,7 @@ public class verFuncionariosController {
 
   @FXML
   private void atras() throws IOException {
-    App.setRoot("primary");
+    App.setRoot("Inicio");
   }
 
 }

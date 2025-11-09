@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SecondaryController implements Initializable {
+public class Form_FuncionarioController implements Initializable {
 
   @FXML
   private ChoiceBox<Sexo> sexoChoiceBox;
@@ -60,7 +60,7 @@ public class SecondaryController implements Initializable {
 
   @FXML
   private void atras() throws IOException {
-    App.setRoot("primary");
+    App.setRoot("Inicio");
   }
 
   @FXML

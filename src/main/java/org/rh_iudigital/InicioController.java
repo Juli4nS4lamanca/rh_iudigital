@@ -3,11 +3,11 @@ package org.rh_iudigital;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
-public class PrimaryController {
+public class InicioController {
 
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private void formFuncionarios() throws IOException {
+        App.setRoot("Form_Funcionario");
     }
 
     @FXML
