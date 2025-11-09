@@ -109,4 +109,9 @@ public class Funcionario {
   public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
     this.fecha_nacimiento = fecha_nacimiento;
   }
+
+  @Override
+  public String toString() {
+    return nombres + " " + apellidos + " (" + no_identificacion + ")";
+  }
 }

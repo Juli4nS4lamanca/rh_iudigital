@@ -1,9 +1,12 @@
 package org.rh_iudigital;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import model.Funcionario;
-
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +35,47 @@ public class verMasFuncionarioController {
   private Label titulo;
 
   private List<String> funcionarioActual;
+  private int funcionarioId;
+
+  @FXML
+  private void onAgregarFamiliar() throws IOException {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/rh_iudigital/FormFamiliar.fxml"));
+      Parent root = loader.load();
+      
+      FormFamiliarController controller = loader.getController();
+      controller.setFuncionarioId(funcionarioId);
+      
+      Stage stage = new Stage();
+      stage.setTitle("Agregar Familiar");
+      stage.setScene(new Scene(root));
+      stage.initModality(Modality.WINDOW_MODAL);
+      stage.initOwner(titulo.getScene().getWindow());
+      stage.showAndWait();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void onAgregarFormacion() throws IOException {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/org/rh_iudigital/formFormacion.fxml"));
+      Parent root = loader.load();
+      
+      FormFormacionController controller = loader.getController();
+      controller.setFuncionarioId(funcionarioId);
+      
+      Stage stage = new Stage();
+      stage.setTitle("Agregar Formación Académica");
+      stage.setScene(new Scene(root));
+      stage.initModality(Modality.WINDOW_MODAL);
+      stage.initOwner(titulo.getScene().getWindow());
+      stage.showAndWait();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   @FXML
   private void atras() throws IOException {
@@ -49,6 +93,7 @@ public class verMasFuncionarioController {
     sexo.setText(funcionario.get(5));
     estadoCivil.setText(funcionario.get(4));
     tipoDocumento.setText(funcionario.get(0));
-    titulo.setText("Información funcionario ID "+funcionario.get(9));
+    funcionarioId = Integer.parseInt(funcionario.get(9));
+    titulo.setText("Información funcionario ID "+funcionarioId);
   }
 }
