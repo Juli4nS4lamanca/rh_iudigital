@@ -4,5 +4,7 @@ module org.rh_iudigital {
     requires java.sql;
 
     opens org.rh_iudigital to javafx.fxml;
+    opens model to javafx.base;
+
     exports org.rh_iudigital;
 }

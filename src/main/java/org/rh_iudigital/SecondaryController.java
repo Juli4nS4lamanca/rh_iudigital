@@ -45,6 +45,7 @@ public class SecondaryController implements Initializable {
   private final SexoDAO sexoDAO = new SexoDAO();
   private final Estado_CivilDAO estadoCivilDAO = new Estado_CivilDAO();
   private final Tipo_DocumentoDAO tipoDocumentoDAO = new Tipo_DocumentoDAO();
+  private Funcionario funcionarioActual;
 
   @Override
   public void initialize(URL location, ResourceBundle resourceBundle) {
@@ -64,29 +65,24 @@ public class SecondaryController implements Initializable {
 
   @FXML
   private void guardarEmpleado() {
-    int idSexo = obtenerIdSeleccionado(sexoChoiceBox);
-    int idTipoDocumento = obtenerIdSeleccionado(tipoDocumentoChoiceBox);
-    int idEstadoCivil = obtenerIdSeleccionado(estadoCivilChoiceBox);
-
+    String operacion;
     try {
-      Funcionario nuevoFuncionario = new Funcionario();
+      Funcionario funcionarioAProcesar = datosFormFuncionarios();
 
-      nuevoFuncionario.setTipo_documento_ID(idTipoDocumento);
-      nuevoFuncionario.setNo_identificacion(no_identificacion.getText());
-      nuevoFuncionario.setNombres(nombres.getText());
-      nuevoFuncionario.setApellidos(apellidos.getText());
-      nuevoFuncionario.setEstado_civil_ID(idEstadoCivil);
-      nuevoFuncionario.setSexo_ID(idSexo);
-      nuevoFuncionario.setDireccion(direccion.getText());
-      nuevoFuncionario.setTelefono(telefono.getText());
-      nuevoFuncionario.setFecha_nacimiento(fecha_nacimiento.getValue());
+      if (funcionarioActual != null) {
+        funcionarioAProcesar.setFuncionario_ID(funcionarioActual.getFuncionario_ID());
+        funcionarioDAO.editarFuncionario(funcionarioAProcesar);
+        operacion = "editado";
+      } else {
+        funcionarioDAO.guardarFuncionario(funcionarioAProcesar);
+        operacion = "guardado";
+      }
 
-      funcionarioDAO.guardarFuncionario(nuevoFuncionario);
-      mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Funcionario " + nuevoFuncionario.getNombres() + " " + nuevoFuncionario.getApellidos() + " guardado correctamente.");
-      limpiarCampos();
+      mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Funcionario " + funcionarioAProcesar.getNombres() + " " + funcionarioAProcesar.getApellidos() + " " + operacion + " correctamente.");
+      App.setRoot("verFuncionarios");
 
     } catch (SQLException e) {
-      mostrarAlerta(Alert.AlertType.ERROR, "Error de Base de Datos", "No se pudo guardar el funcionario: " + e.getMessage());
+      mostrarAlerta(Alert.AlertType.ERROR, "Error de Base de Datos", "No se pudo " + (funcionarioActual != null ? "editar" : "guardar") + " el funcionario: " + e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
       mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error inesperado " + e.getMessage());
@@ -140,6 +136,49 @@ public class SecondaryController implements Initializable {
   private <T extends ObtenerID> int obtenerIdSeleccionado(ChoiceBox<T> choiceBox) {
     T seleccionado = choiceBox.getSelectionModel().getSelectedItem();
     return (seleccionado != null) ? seleccionado.getId() : 0;
+  }
+
+  public void setFuncionario (Funcionario funcionario){
+    this.funcionarioActual = funcionario;
+    no_identificacion.setText(funcionario.getNo_identificacion());
+    nombres.setText(funcionario.getNombres());
+    apellidos.setText(funcionario.getApellidos());
+    direccion.setText(funcionario.getDireccion());
+    telefono.setText(funcionario.getTelefono());
+    fecha_nacimiento.setValue(funcionario.getFecha_nacimiento());
+    seleccionarItemPorID(sexoChoiceBox, funcionario.getSexo_ID());
+    seleccionarItemPorID(estadoCivilChoiceBox, funcionario.getEstado_civil_ID());
+    seleccionarItemPorID(tipoDocumentoChoiceBox, funcionario.getTipo_documento_ID());
+
+  }
+
+  private Funcionario datosFormFuncionarios(){
+    int idSexo = obtenerIdSeleccionado(sexoChoiceBox);
+    int idTipoDocumento = obtenerIdSeleccionado(tipoDocumentoChoiceBox);
+    int idEstadoCivil = obtenerIdSeleccionado(estadoCivilChoiceBox);
+
+    Funcionario funcionario = new Funcionario();
+
+    funcionario.setTipo_documento_ID(idTipoDocumento);
+    funcionario.setNo_identificacion(no_identificacion.getText());
+    funcionario.setNombres(nombres.getText());
+    funcionario.setApellidos(apellidos.getText());
+    funcionario.setEstado_civil_ID(idEstadoCivil);
+    funcionario.setSexo_ID(idSexo);
+    funcionario.setDireccion(direccion.getText());
+    funcionario.setTelefono(telefono.getText());
+    funcionario.setFecha_nacimiento(fecha_nacimiento.getValue());
+
+    return funcionario;
+  }
+
+  private <T extends ObtenerID> void seleccionarItemPorID (ChoiceBox<T> choiceBox, int id){
+    for (T item : choiceBox.getItems()){
+      if (item.getId() == id){
+        choiceBox.getSelectionModel().select(item);
+        return;
+      }
+    }
   }
 
 

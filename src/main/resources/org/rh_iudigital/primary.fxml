@@ -9,6 +9,7 @@
    <children>
       <Label text="Inicio" />
       <Button fx:id="primaryButton" text="Nuevo Funcionario" onAction="#switchToSecondary"/>
+      <Button fx:id="verFuncionariosButton" text="Ver Funcionarios" onAction="#verFuncionarios"/>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
