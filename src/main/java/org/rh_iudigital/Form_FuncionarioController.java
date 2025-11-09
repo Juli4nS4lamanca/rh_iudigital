@@ -60,7 +60,11 @@ public class Form_FuncionarioController implements Initializable {
 
   @FXML
   private void atras() throws IOException {
-    App.setRoot("Inicio");
+    if (funcionarioActual != null){
+      App.setRoot("verFuncionarios");
+    }else {
+      App.setRoot("Inicio");
+    }
   }
 
   @FXML
